@@ -4,7 +4,7 @@
 // for more information refers to ComplexCellular1D
 
 public class ECA extends ComplexCellular1D{
-	ECA(int L) {
+	public ECA(int L) {
 		super(L, 3, 2);// BRUH THIS CLASS IS ALMOST USELESS
 	}
 }

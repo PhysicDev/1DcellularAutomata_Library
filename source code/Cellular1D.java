@@ -24,27 +24,44 @@ public class Cellular1D {
 	int l=100;//length
 	int n=1;//neighbors
 	int t=2;//states
-	int gen=0;
+	public int gen=0;
+	public int getLength(){
+		return(l);
+	}
+	public int getNeighbors(){
+		return(n);
+	}
+	public int getState(){
+		return(t);
+	}
 	
 	//World infos
-	int[] state=new int[l];
+	public int[] state=new int[l];
 	int[] Compute=new int[l];
-	//boolean topology=true;//true : topologie en anneau, false : topologie en ligne
 	
 	//Rule infos
 	int Rule=0;
 	int MaxRule=(int)Math.pow(t,(2*n+1)*(t-1)+1);
-	int[] RuleA= {0,0,0,0};
+	private nt[] RuleA= {0,0,0,0};
+	
+	public int getRule(){
+		return(Rule);
+	}
+	public int maxRule(){
+		return(MaxRule);
+	}
 	
 	//this array is for the translation between the Array and the terminal
 	char[] trad= {' ','#'};
-	
+	public int getTranslate(int state){
+		return(MaxRule);
+	}
 	
 	// constructor :
 	// L is the length of the automaton
 	// N is the range of the neighbors (for example for the elementary cellular automaton n=1);
 	// T is the number of states
-	Cellular1D(int L,int N,int T){
+	public Cellular1D(int L,int N,int T){
 		l=L;
 		n=(N-1)/2;
 		t=T;
@@ -57,14 +74,14 @@ public class Cellular1D {
 	}
 	
 	// compute the neighbors value
-	public int sum(int x){
+	int sum(int x){
 		int S=0;
 		for(int i=x-n;i<=n+x;i++)S+=state[(i+l)%l];
 		return(S);
 	}
 	
 	// better sum to avoid doing the same calcul multiple time
-	public int sum(int x,int last) {return(last-state[(x-n-1+l)%l]+state[(x+n)%l]);}//somme optimisée pour reduire la complexité.
+	int sum(int x,int last) {return(last-state[(x-n-1+l)%l]+state[(x+n)%l]);}//somme optimisée pour reduire la complexité.
 	
 	
 	// reset function (generate an empty array exept one value, 1 by default)
@@ -116,7 +133,7 @@ public class Cellular1D {
 
 	// get the next value of a cell with the neighbors value 
 	// workC use the Rule value and work use the Rule array
-	public int workC(int S) {return(int)(((int)Rule%Math.pow(t,S+1))/(int)Math.pow(t,S));}
-	public int work(int S) {return(int)RuleA[S];}
+	int workC(int S) {return(int)(((int)Rule%Math.pow(t,S+1))/(int)Math.pow(t,S));}
+	int work(int S) {return(int)RuleA[S];}
 	
 }

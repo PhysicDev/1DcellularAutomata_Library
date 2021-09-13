@@ -20,20 +20,20 @@ public class ComplexCellular1D extends Cellular1D {
 	int cells=3;
 	
 	// the constructor is the same except the maxRule Value is higher.
-	ComplexCellular1D(int L, int N, int T) {
+	public ComplexCellular1D(int L, int N, int T) {
 		super(L, N, T);
 		MaxRule=(int)Math.pow(T,Math.pow(T,N));
 	}
 	
 	//the sum function is no longer a sum, now it convert the neighbor exact configurations in a number.
-	public int sum(int x) {
+	int sum(int x) {
 		int S=0,p=(int)Math.pow(t,2*n);
 		for(int i=x-n;i<=n+x;i++){S+=p*state[(i+l)%l];p/=2;}
 		return S;
 	}
 	
 	//the same function as above but optimized to reduce complexity
-	public int sum(int x,int last){return (int) (last-Math.pow(t,2*n)*state[(x-n-1+l)%l])*t+state[(x+n)%l];}
+	int sum(int x,int last){return (int) (last-Math.pow(t,2*n)*state[(x-n-1+l)%l])*t+state[(x+n)%l];}
 	
 	//the new function to compute rule Array
 	public int[] RuleDat(){
