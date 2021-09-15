@@ -74,4 +74,24 @@ Functions:
    - toString()
    convert the state array in a String with the help of the translate array (see setChar())
 
++ Class ComplexCellular1D
+
+work in the same way as Cellular1D
+
+hovewer cellular automata of ComplexCellular1D are'nt totalistic :
+
+example :
+
+Cellular1D :
+
+20320+12031 because
+20320 = 2+0+3+2+0=7
+12031 = 1+2+0+3+1=7
+
+but in ComplexCellular1D :
+
+20320 != 12031
+
+so these configuarions can give different result
+
 
