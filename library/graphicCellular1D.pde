@@ -26,7 +26,7 @@ void drawCellular(Cellular1D C,color[] trad,int skip){
 }
 
 void screenShot(Cellular1D C){
-  saveFrame("./screenshot/"+C.getRule()+"-"+C.getLength()+"-"+test.gen+".png");
+  saveFrame("./screenshot/"+C.getRule()+"-"+C.getLength()+"-"+C.gen+".png");
 }
 
 

@@ -40,7 +40,7 @@ public class Cellular1D {
 	int[] Compute=new int[l];
 	
 	//Rule infos
-	int Rule=0;
+	private int Rule=0;
 	int MaxRule=(int)Math.pow(t,(2*n+1)*(t-1)+1);
 	private nt[] RuleA= {0,0,0,0};
 	
@@ -59,7 +59,7 @@ public class Cellular1D {
 	
 	// constructor :
 	// L is the length of the automaton
-	// N is the range of the neighbors (for example for the elementary cellular automaton n=1);
+	// N is the range of the neighbors (for example for the elementary cellular automaton n=3); Has to be ODD or the result may not be what you want.
 	// T is the number of states
 	public Cellular1D(int L,int N,int T){
 		l=L;
