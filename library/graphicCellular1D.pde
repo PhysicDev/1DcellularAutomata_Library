@@ -1,5 +1,5 @@
 void drawCellular(Cellular1D C,color[] trad){
-  float scale=width/C.getLength();
+  float scale=width/(float)C.getLength();
   int Line=C.gen;
   scale(scale);
   float dat=Line%(height/scale);
