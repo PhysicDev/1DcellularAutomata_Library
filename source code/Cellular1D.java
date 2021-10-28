@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -16,15 +17,17 @@ the position of each neighbors have no effect on the Rule
 the ComplexCellular1D class take also care of the position of neighbors.
 
 */
+
 public class Cellular1D {
 	
 	//variables:
 	
 	//main infos
 	int l=100;//length
-	int n=1;//neighbors
+    int n=1;//neighbors
 	int t=2;//states
-	public int gen=0;
+	public long gen=0;
+	
 	public int getLength(){
 		return(l);
 	}
@@ -37,24 +40,24 @@ public class Cellular1D {
 	
 	//World infos
 	public int[] state=new int[l];
-	int[] Compute=new int[l];
+	private int[] Compute=new int[l];
 	
-	//Rule infos
-	private int Rule=0;
-	int MaxRule=(int)Math.pow(t,(2*n+1)*(t-1)+1);
-	private nt[] RuleA= {0,0,0,0};
+	//Rule infos (converted to BigInteger for better result)
+	private BigInteger Rule=BigInteger.ZERO;
+	BigInteger MaxRule=BigInteger.ONE;
+	public int[] RuleA= {0,0,0,0};
 	
-	public int getRule(){
+	public BigInteger getRule(){
 		return(Rule);
 	}
-	public int maxRule(){
+	public BigInteger maxRule(){
 		return(MaxRule);
 	}
 	
 	//this array is for the translation between the Array and the terminal
 	char[] trad= {' ','#'};
 	public int getTranslate(int state){
-		return(MaxRule);
+		return(RuleA[state]);
 	}
 	
 	// constructor :
@@ -67,7 +70,7 @@ public class Cellular1D {
 		t=T;
 		trad=new char[T];
 		for(int i=0;i<T;i++)trad[i]=(char)(32+i);
-		MaxRule=(int)Math.pow(t,(2*n+1)*(t-1)+1);
+		MaxRule=new BigInteger(t+"").pow((2*n+1)*(t-1)+1);//Math.pow(t,(2*n+1)*(t-1)+1);
 		state=new int[L];
 		Arrays.fill(state,0);
 		Compute=new int[L];
@@ -79,7 +82,6 @@ public class Cellular1D {
 		for(int i=x-n;i<=n+x;i++)S+=state[(i+l)%l];
 		return(S);
 	}
-	
 	// better sum to avoid doing the same calcul multiple time
 	int sum(int x,int last) {return(last-state[(x-n-1+l)%l]+state[(x+n)%l]);}//somme optimisée pour reduire la complexité.
 	
@@ -95,8 +97,20 @@ public class Cellular1D {
 	}
 	
 	// use this to change the automaton Rule
-	public void setRule(int r) {
+	public void setRule(BigInteger r) {
 		Rule=r;
+		RuleA=RuleDat();
+	}
+	
+	// use this to change the automaton Rule
+	public void setRule(String r) {
+		Rule=new BigInteger(r);
+		RuleA=RuleDat();
+	}
+	
+	// use this to change the automaton Rule
+	public void setRule(long r) {
+		Rule=new BigInteger(r+"");
 		RuleA=RuleDat();
 	}
 	
@@ -125,15 +139,14 @@ public class Cellular1D {
 	
 	//pour pré-calculer les valeurs de règle.
 	// convert Rule Value in Rule Array
-	public int[] RuleDat(){
+	int[] RuleDat(){
 		int[] Out= new int[(t-1)*(2*n+1)+1];
-		for(int i=0;i<Out.length;i++)Out[i]=workC(i);
+		for(int i=0;i<Out.length;i++) Out[i]=workC(i);
 		return(Out);
 	}
 
 	// get the next value of a cell with the neighbors value 
 	// workC use the Rule value and work use the Rule array
-	int workC(int S) {return(int)(((int)Rule%Math.pow(t,S+1))/(int)Math.pow(t,S));}
+	int workC(int S) {return(Rule.mod(new BigInteger(t+"").pow(S+1)).divide(new BigInteger(t+"").pow(S)).intValue());}
 	int work(int S) {return(int)RuleA[S];}
-	
 }

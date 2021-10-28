@@ -1,4 +1,3 @@
-
 // ECA class :
 // this class simulate only Elementary cellular Automata
 // for more information refers to ComplexCellular1D

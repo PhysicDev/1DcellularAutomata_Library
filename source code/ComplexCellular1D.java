@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 /*
 ===========MADE BY PHYSIC DEV (Physic Gamer)===========
 
@@ -14,31 +15,29 @@ to create automata that depends of the exact configuration of a neighbors instea
 for more informations refers to Cellular1D
 */
 
-
 public class ComplexCellular1D extends Cellular1D {
-	int MaxRule=256;
+	BigInteger MaxRule=new BigInteger("256");
 	int cells=3;
 	
 	// the constructor is the same except the maxRule Value is higher.
 	public ComplexCellular1D(int L, int N, int T) {
 		super(L, N, T);
-		MaxRule=(int)Math.pow(T,Math.pow(T,N));
+		MaxRule=new BigInteger(T+"").pow((int)(Math.pow(T, N))) ;
 	}
 	
-	//the sum function is no longer a sum, now it convert the neighbor exact configurations in a number.
+	//the sum function is no longer a sum, now it convert the neighbors exact configurations in a number.
 	int sum(int x) {
 		int S=0,p=(int)Math.pow(t,2*n);
-		for(int i=x-n;i<=n+x;i++){S+=p*state[(i+l)%l];p/=2;}
+		for(int i=x-n;i<=n+x;i++){S+=p*state[(i+l)%l];p/=t;}
 		return S;
 	}
 	
 	//the same function as above but optimized to reduce complexity
 	int sum(int x,int last){return (int) (last-Math.pow(t,2*n)*state[(x-n-1+l)%l])*t+state[(x+n)%l];}
 	
-	//the new function to compute rule Array
-	public int[] RuleDat(){
+	int[] RuleDat(){
 		int[] Out= new int[(int) Math.pow(t,2*n+1)];
-		for(int i=0;i<Out.length;i++)Out[i]=workC(i);
+		for(int i=0;i<Out.length;i++){Out[i]=workC(i);}
 		return(Out);
 	}
 }
